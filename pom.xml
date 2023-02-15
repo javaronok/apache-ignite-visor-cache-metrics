@@ -6,10 +6,10 @@
 
     <groupId>org.apache.ignite</groupId>
     <artifactId>visor-cache-metrics</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 
     <properties>
-        <ignite.version>2.8.1</ignite.version>
+        <ignite.version>2.13.0</ignite.version>
     </properties>
 
     <dependencies>
@@ -32,4 +32,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Javaronok Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/javaronok/apache-ignite-visor-cache-metrics</url>
+        </repository>
+    </distributionManagement>
 </project>

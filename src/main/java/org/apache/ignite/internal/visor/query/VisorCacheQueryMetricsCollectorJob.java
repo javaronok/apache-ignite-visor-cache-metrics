@@ -1,7 +1,6 @@
 package org.apache.ignite.internal.visor.query;
 
 import org.apache.ignite.IgniteException;
-import org.apache.ignite.configuration.IgniteConfiguration;
 import org.apache.ignite.internal.processors.cache.GridCacheContext;
 import org.apache.ignite.internal.processors.cache.GridCacheProcessor;
 import org.apache.ignite.internal.processors.cache.IgniteCacheProxy;
@@ -15,7 +14,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.ignite.internal.processors.cache.GridCacheUtils.isIgfsCache;
 import static org.apache.ignite.internal.processors.cache.GridCacheUtils.isSystemCache;
 
 public class VisorCacheQueryMetricsCollectorJob extends VisorJob<VisorCacheQueryMetricsCollectorTaskArg, Map<String, VisorQueryMetrics>> {
@@ -40,8 +38,6 @@ public class VisorCacheQueryMetricsCollectorJob extends VisorJob<VisorCacheQuery
 
     assert cacheNames != null;
 
-    IgniteConfiguration cfg = ignite.configuration();
-
     GridCacheProcessor cacheProcessor = ignite.context().cache();
 
     Collection<IgniteCacheProxy<?, ?>> caches = cacheProcessor.jcaches();
@@ -56,7 +52,7 @@ public class VisorCacheQueryMetricsCollectorJob extends VisorJob<VisorCacheQuery
       if ((allCaches || cacheNames.contains(cacheName)) && !VisorTaskUtils.isRestartingCache(ignite, cacheName)) {
         GridCacheContext<?,?> ctx = ca.context();
 
-        if (ctx.started() && !isSystemCache(cacheName) && !isIgfsCache(cfg, cacheName)) {
+        if (ctx.started() && !isSystemCache(cacheName)) {
           VisorQueryMetrics m = new VisorQueryMetrics(ca.queryMetrics());
           res.put(cacheName, m);
         }
